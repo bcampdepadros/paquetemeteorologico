@@ -13,7 +13,7 @@ RoxygenNote: 7.3.2
 Depends: 
     R (>= 2.10)
 LazyData: true
-URL: https://github.com/Mann890/PRO
+URL: https://github.com/Mann890/PRO, https://bcampdepadros.github.io/paquetemeteorologico/
 BugReports: https://github.com/Mann890/PRO/issues
 Suggests: 
     knitr,
