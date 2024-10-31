@@ -9,11 +9,11 @@
 #'
 #' @examples
 #' # Cargar los datos de ejemplo desde el paquete
-#' data_path <- system.file("data", "estaciones_merged.rda", package = "PaqueteMeteorologia")
-#' load(data_path)
+#' # data_path <- system.file("data", "estaciones_merged.rda", package = "PaqueteMeteorologia")
+#' # load(data_path)
 #'
 #' # Llamar a la función usando los datos cargados
-#' tabla_resumen_temperatura(estaciones_merged)
+#' # tabla_resumen_temperatura(estaciones_merged)
 tabla_resumen_temperatura <- function(datos) {
   resumen <- datos %>%
     group_by(id) %>%

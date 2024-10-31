@@ -13,8 +13,9 @@
 #' @export
 #'
 #' @examples
-#' descargar_datos("NH0098", "data")
-#' descargar_datos("NH0910", "data")
+#' # Descargar datos de la estación NH0098 y guardarlos en el directorio "data"
+#' datos <- descargar_datos("NH0098", "data")
+
 descargar_datos <- function(id_estacion, directorio_destino) {
   url_repositorio <- "https://raw.githubusercontent.com/rse-r/intro-programacion/main/datos/"
   estacion_url <- paste0(url_repositorio, id_estacion, ".csv")
