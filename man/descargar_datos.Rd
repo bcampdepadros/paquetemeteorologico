@@ -7,17 +7,18 @@
 descargar_datos(id_estacion, directorio_destino)
 }
 \arguments{
-\item{id_estacion}{ID de la estación.}
+\item{id_estacion}{ID de la estación meteorológica.}
 
 \item{directorio_destino}{Directorio donde se guardará el archivo CSV.}
 }
 \value{
+Un data.frame con los datos meteorológicos de la estación.
 Un archivo CSV con los datos meteorológicos de la estación con el ID ingresado.
 }
 \description{
 La función \code{descargar_datos} toma el ID de una estación y un directorio de destino, y descarga en dicha ubicación un archivo CSV con los datos meteorológicos de la estación correspondiente. Los IDs posibles son: NH0098, NH0046, NH437, NH472 y NH0910.
 }
 \examples{
-descargar_datos("NH0098", "data")
-descargar_datos("NH0910", "data")
+# Descargar datos de la estación NH0098 y guardarlos en el directorio "data"
+datos <- descargar_datos("NH0098", "data")
 }
