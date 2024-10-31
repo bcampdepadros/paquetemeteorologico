@@ -17,10 +17,3 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(PRO)
 ```
-
-
-```{r}
-suma(2, 2)
-
-```
-
