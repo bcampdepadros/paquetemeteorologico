@@ -4,7 +4,7 @@
 \alias{suma}
 \title{suma dos numeros}
 \usage{
-suma(x, y)
+suma(x = 2, y = 2)
 }
 \arguments{
 \item{y}{}
