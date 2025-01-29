@@ -24,3 +24,4 @@ tabla_resumen_temperatura <- function(datos) {
     )
   return(resumen)
 }
+utils::globalVariables(c("temperatura_abrigo_150cm"))

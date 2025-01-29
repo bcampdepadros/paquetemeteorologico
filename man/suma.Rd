@@ -2,13 +2,22 @@
 % Please edit documentation in R/suma.R
 \name{suma}
 \alias{suma}
-\title{suma dos numeros}
+\title{Suma dos números}
 \usage{
-suma(x = 2, y = 2)
+suma(x, y)
 }
 \arguments{
-\item{y}{}
+\item{x}{El primer número (número).}
+
+\item{y}{El segundo número (número).}
+}
+\value{
+La suma de los dos números (número).
 }
 \description{
-Esta funcion toma dos numeros y los suma
+Esta función toma dos números y devuelve su suma.
+}
+\examples{
+suma(2, 3) # Devuelve 5
+suma(-1, 5) # Devuelve 4
 }

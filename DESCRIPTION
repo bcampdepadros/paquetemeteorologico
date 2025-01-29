@@ -1,10 +1,15 @@
-Package: PRO
-Title: What the Package Does (One Line, Title Case)
+Package: paquetemeteorologico
+Title: Herramientas para el Análisis de Datos Meteorológicos
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+    c(
+        person(given = "Manuel", family = "Menendez", email = "menendezmanuel04@gmail.com", 
+               role = c("aut", "cre"), comment = c(ORCID = "YOUR-ORCID-ID")),
+        person(given = "Bautista", family = "Campdepadros", email = "segundo.email@example.com", 
+               role = "aut", comment = c(ORCID = "SECOND-ORCID-ID"))
+    )
+Description: Este paquete proporciona herramientas para procesar, analizar y visualizar
+    datos meteorológicos provenientes de estaciones meteorológicas.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -12,8 +17,8 @@ RoxygenNote: 7.3.2
 Depends: 
     R (>= 2.10)
 LazyData: true
-URL: https://github.com/Mann890/PRO, https://bcampdepadros.github.io/paquetemeteorologico/
-BugReports: https://github.com/Mann890/PRO/issues
+URL: https://github.com/bcampdepadros/paquetemeteorologico, https://bcampdepadros.github.io/paquetemeteorologico/
+BugReports: https://github.com/bcampdepadros/paquetemeteorologico/issues
 Suggests: 
     knitr,
     rmarkdown,
@@ -26,3 +31,5 @@ Imports:
     lubridate,
     readr
 Config/testthat/edition: 3
+
+

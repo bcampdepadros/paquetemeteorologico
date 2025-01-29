@@ -3,21 +3,23 @@
 \docType{data}
 \name{datos}
 \alias{datos}
-\title{Conjunto de datos de ejemplo}
+\title{Conjunto de datos meteorológicos}
 \format{
-Los datos son generados de forma sintetica.
+Un data frame con 2 filas y 4 columnas:
 \describe{
-\item{a}{muestra de datos}
-\item{b}{muestra de datos multiplicada por cinco}
+\item{estacion}{Nombre de la estación meteorológica (carácter).}
+\item{temperatura}{Temperatura media diaria en grados Celsius (numérico).}
+\item{humedad}{Humedad relativa promedio en porcentaje (numérico).}
+\item{precipitacion}{Precipitación diaria en milímetros (numérico).}
 }
 }
 \source{
-generacion propia con funciones de R
+Datos simulados para pruebas.
 }
 \usage{
 datos
 }
 \description{
-Conjunto de datos de ejemplo
+Este conjunto de datos incluye información simulada sobre estaciones meteorológicas.
 }
 \keyword{datasets}

@@ -45,3 +45,4 @@ grafico_temperatura_mensual <- function(datos, colores = NULL, titulo = "Tempera
 
   return(grafico)
 }
+utils::globalVariables(c("fecha", "mes", "temperatura_abrigo_150cm", "mean_temp"))

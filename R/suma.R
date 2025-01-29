@@ -1,32 +1,15 @@
-#' suma dos numeros
+#' Suma dos números
 #'
+#' Esta función toma dos números y devuelve su suma.
 #'
-#'Esta funcion toma dos numeros y los suma
-#'
-#' @param x
-#' @param y
-#'
-#' @return
-#' @export
-#'
+#' @param x El primer número (número).
+#' @param y El segundo número (número).
+#' @return La suma de los dos números (número).
 #' @examples
-suma <- function(x = 2, y = 2) {
-
-  if (!is.numeric(x) | !is.numeric(y)) {
-
-    cli::cli_abort(c(
-      "i" = "los argumentos deben ser numericos.",
-      "x" = "x es {class(x)}, y es {class(y)}"
-    ))
-  }
-
-  if (sign(x) < 0 | sign(y)  < 0) {
-    cli::cli_abort(c(
-      "i" = "No puedo sumar negativos."
-    ))
-  }
-
-  x + y
+#' suma(2, 3) # Devuelve 5
+#' suma(-1, 5) # Devuelve 4
+#' @export
+suma <- function(x, y) {
+  return(x + y)
 }
 
-# usethis::use_data(datos)
