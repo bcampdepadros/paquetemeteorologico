@@ -1,9 +1,9 @@
 pandoc: 3.1.11
-pkgdown: 2.1.1
+pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   vinieta_prueba: vinieta_prueba.html
-last_built: 2025-01-29T14:40Z
+last_built: 2025-09-26T20:03Z
 urls:
   reference: https://bcampdepadros.github.io/paquetemeteorologico/reference
   article: https://bcampdepadros.github.io/paquetemeteorologico/articles
