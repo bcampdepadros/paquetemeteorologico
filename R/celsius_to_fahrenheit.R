@@ -1,22 +1,19 @@
-#' Convierte Temperatura de Celsius a Fahrenheit
+#' Convertir grados Celsius a Fahrenheit
 #'
-#' La función `celsius_to_fahrenheit` toma una temperatura en grados Celsius y la convierte en grados Fahrenheit.
-#' @param temp_centigrados Una temperatura en grado Celsius.
+#' Convierte una temperatura o vector de temperaturas de grados Celsius a Fahrenheit.
 #'
-#' @return
-#' La temperatura ingresada pero en grados Fahrenheit.
-#' @export
-#'
+#' @param celsius Un valor numerico o vector numerico que representa grados Celsius.
+#' @return Un valor numerico o vector numerico en grados Fahrenheit.
 #' @examples
-#' celsius_to_fahrenheit(20)
-#' celsius_to_fahrenheit(-10)
-celsius_to_fahrenheit <- function(temp_centigrados) {
-  if (!is.numeric(temp_centigrados)){
+#' celsius_to_fahrenheit(0)
+#' celsius_to_fahrenheit(c(10, 25, 30))
+#' @export
+celsius_to_fahrenheit <- function(celsius) {
+  if (!is.numeric(celsius)) {
     cli::cli_abort(c(
       "i" = "La temperatura debe ser numerica.",
-      "x" = "temp_centigrados es {class(temp_centigrados)}"
+      "x" = "El argumento ingresado es de tipo {class(celsius)}."
     ))
   }
-  temp_f <- (temp_centigrados * 9/5) + 32
-  return(temp_f)
+  (celsius * 9/5) + 32
 }

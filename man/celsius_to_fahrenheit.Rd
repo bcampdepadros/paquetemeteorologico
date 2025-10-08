@@ -2,20 +2,20 @@
 % Please edit documentation in R/celsius_to_fahrenheit.R
 \name{celsius_to_fahrenheit}
 \alias{celsius_to_fahrenheit}
-\title{Convierte Temperatura de Celsius a Fahrenheit}
+\title{Convertir grados Celsius a Fahrenheit}
 \usage{
-celsius_to_fahrenheit(temp_centigrados)
+celsius_to_fahrenheit(celsius)
 }
 \arguments{
-\item{temp_centigrados}{Una temperatura en grado Celsius.}
+\item{celsius}{Un valor numerico o vector numerico que representa grados Celsius.}
 }
 \value{
-La temperatura ingresada pero en grados Fahrenheit.
+Un valor numerico o vector numerico en grados Fahrenheit.
 }
 \description{
-La función \code{celsius_to_fahrenheit} toma una temperatura en grados Celsius y la convierte en grados Fahrenheit.
+Convierte una temperatura o vector de temperaturas de grados Celsius a Fahrenheit.
 }
 \examples{
-celsius_to_fahrenheit(20)
-celsius_to_fahrenheit(-10)
+celsius_to_fahrenheit(0)
+celsius_to_fahrenheit(c(10, 25, 30))
 }
