@@ -1,11 +1,10 @@
 ---
 title: "Introducción a paquetemeteorologico"
-output:
-  rmarkdown::html_vignette:
-    df_print: paged
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Introducción a paquetemeteorologico}
   %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include=FALSE}
