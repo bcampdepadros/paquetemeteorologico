@@ -2,28 +2,31 @@
 % Please edit documentation in R/grafico_temperatura_mensual.R
 \name{grafico_temperatura_mensual}
 \alias{grafico_temperatura_mensual}
-\title{Gráfico de la Temperatura Mensual}
+\title{Grafico de la temperatura mensual}
 \usage{
-grafico_temperatura_mensual(datos, colores = NULL, titulo = "Temperatura")
+grafico_temperatura_mensual(datos, titulo = "Temperatura")
 }
 \arguments{
-\item{datos}{data.frame a partir del cual se crearán los gráficos.}
+\item{datos}{Data frame con columnas: \code{id}, \code{fecha}, \code{temperatura_abrigo_150cm}.}
 
-\item{colores}{Colores que se utilizarán en el gráfico.}
-
-\item{titulo}{Título para el gráfico.}
+\item{titulo}{Titulo del grafico (string).}
 }
 \value{
-Genera un gráfico de la temperatura mensual del data.frame con el título y los colores ingresados.
+Objeto ggplot.
 }
 \description{
-La función \code{grafico_temperatura_mensual} devuelve un gráfico que muestra el promedio mensual de la temperatura de abrigo.
+Devuelve un ggplot con la temperatura promedio mensual por estacion.
 }
 \examples{
-# Cargar los datos de ejemplo desde el paquete
-# data_path <- system.file("data", "estaciones_merged.rda", package = "PaqueteMeteorologia")
-# load(data_path)
-
-# Llamar a la función usando los datos cargados
-# grafico_temperatura_mensual(estaciones_merged, NULL, "Temperatura Mensual Promedio")
+\donttest{
+data(datos, package = "paquetemeteorologico")
+if (all(c("estacion","temperatura") \%in\% names(datos))) {
+  df <- data.frame(
+    id    = datos$estacion,
+    fecha = as.Date("2020-01-01") + seq_len(nrow(datos)) - 1,
+    temperatura_abrigo_150cm = datos$temperatura
+  )
+  p <- grafico_temperatura_mensual(df, titulo = "Temperatura mensual promedio")
+}
+}
 }

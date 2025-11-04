@@ -1,48 +1,53 @@
-#' Gráfico de la Temperatura Mensual
+#' Grafico de la temperatura mensual
 #'
-#' La función `grafico_temperatura_mensual` devuelve un gráfico que muestra el promedio mensual de la temperatura de abrigo.
-#' @param datos data.frame a partir del cual se crearán los gráficos.
-#' @param colores Colores que se utilizarán en el gráfico.
-#' @param titulo Título para el gráfico.
+#' Devuelve un ggplot con la temperatura promedio mensual por estacion.
 #'
-#' @return
-#' Genera un gráfico de la temperatura mensual del data.frame con el título y los colores ingresados.
-#'
-#' @import ggplot2
-#' @import dplyr
-#' @import lubridate
-#' @importFrom grDevices colors
-#'
+#' @param datos Data frame con columnas: `id`, `fecha`, `temperatura_abrigo_150cm`.
+#' @param titulo Titulo del grafico (string).
+#' @return Objeto ggplot.
+#' @import ggplot2 dplyr lubridate
 #' @export
 #'
 #' @examples
-#' # Cargar los datos de ejemplo desde el paquete
-#' # data_path <- system.file("data", "estaciones_merged.rda", package = "PaqueteMeteorologia")
-#' # load(data_path)
-#'
-#' # Llamar a la función usando los datos cargados
-#' # grafico_temperatura_mensual(estaciones_merged, NULL, "Temperatura Mensual Promedio")
-
-
-grafico_temperatura_mensual <- function(datos, colores = NULL, titulo = "Temperatura") {
-  # Asegúrate de que la columna fecha esté en el formato correcto
-  datos$fecha <- as.Date(datos$fecha)  # Ajusta esto según el formato de tus datos
-
-  # Si no se especifican colores, se generan aleatoriamente
-  if (is.null(colores)) {
-    colores <- sample(colors(), length(unique(datos$id)))
+#' \donttest{
+#' data(datos, package = "paquetemeteorologico")
+#' if (all(c("estacion","temperatura") %in% names(datos))) {
+#'   df <- data.frame(
+#'     id    = datos$estacion,
+#'     fecha = as.Date("2020-01-01") + seq_len(nrow(datos)) - 1,
+#'     temperatura_abrigo_150cm = datos$temperatura
+#'   )
+#'   p <- grafico_temperatura_mensual(df, titulo = "Temperatura mensual promedio")
+#' }
+#' }
+grafico_temperatura_mensual <- function(datos, titulo = "Temperatura") {
+  # Validaciones minimas con {cli}
+  if (!is.data.frame(datos)) {
+    cli::cli_abort("`datos` debe ser un data.frame o tibble.")
+  }
+  req <- c("id", "fecha", "temperatura_abrigo_150cm")
+  faltan <- setdiff(req, names(datos))
+  if (length(faltan) > 0) {
+    cli::cli_abort("Faltan columnas: {paste(faltan, collapse = ', ')}")
+  }
+  if (!is.character(titulo) || length(titulo) != 1) {
+    cli::cli_abort("`titulo` debe ser un string de longitud 1.")
   }
 
-  # Crear gráfico
-  grafico <- datos |>
-    mutate(mes = month(fecha)) |>
-    group_by(id, mes) |>
-    summarise(mean_temp = mean(temperatura_abrigo_150cm, na.rm = TRUE), .groups = 'drop') |>
-    ggplot(aes(x = mes, y = mean_temp, color = id)) +
-    geom_line() +
-    scale_color_manual(values = colores) +
-    labs(title = titulo, x = "Mes", y = "Temperatura Promedio")
+  # fecha a Date si viene como texto o POSIX
+  if (!inherits(datos$fecha, "Date")) {
+    datos$fecha <- as.Date(datos$fecha)
+    if (anyNA(datos$fecha)) cli::cli_abort("No se pudo convertir `fecha` a Date.")
+  }
 
-  return(grafico)
+  datos |>
+    dplyr::mutate(mes = lubridate::month(.data$fecha)) |>
+    dplyr::group_by(.data$id, .data$mes) |>
+    dplyr::summarise(mean_temp = mean(.data$temperatura_abrigo_150cm, na.rm = TRUE),
+                     .groups = "drop") |>
+    ggplot2::ggplot(ggplot2::aes(x = .data$mes, y = .data$mean_temp, color = .data$id)) +
+    ggplot2::geom_line() +
+    ggplot2::scale_x_continuous(breaks = 1:12) +
+    ggplot2::labs(title = titulo, x = "Mes", y = "Temperatura promedio (C)", color = "Estacion") +
+    ggplot2::theme_minimal()
 }
-utils::globalVariables(c("fecha", "mes", "temperatura_abrigo_150cm", "mean_temp"))
