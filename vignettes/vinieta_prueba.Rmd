@@ -1,19 +1,12 @@
 ---
-title: "vinieta_prueba"
-output: rmarkdown::html_vignette
+title: "Introducción a paquetemeteorologico"
+output:
+  rmarkdown::html_vignette:
+    df_print: paged
 vignette: >
-  %\VignetteIndexEntry{vinieta_prueba}
+  %\VignetteIndexEntry{Introducción a paquetemeteorologico}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
-
-```{r setup}
-library(paquetemeteorologico)
-```
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 7, fig.height = 4)
