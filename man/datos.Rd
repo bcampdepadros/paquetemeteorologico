@@ -3,23 +3,29 @@
 \docType{data}
 \name{datos}
 \alias{datos}
-\title{Conjunto de datos meteorológicos}
+\title{Datos meteorologicos de ejemplo}
 \format{
-Un data frame con 2 filas y 4 columnas:
+Data frame con 3 columnas:
 \describe{
-\item{estacion}{Nombre de la estación meteorológica (carácter).}
-\item{temperatura}{Temperatura media diaria en grados Celsius (numérico).}
-\item{humedad}{Humedad relativa promedio en porcentaje (numérico).}
-\item{precipitacion}{Precipitación diaria en milímetros (numérico).}
+\item{id}{codigo de estacion (character).}
+\item{fecha}{fecha de observacion (Date).}
+\item{temperatura_abrigo_150cm}{temperatura del aire a 1.5 m en grados
+Celsius (numeric).}
 }
 }
 \source{
-Datos simulados para pruebas.
+Datos simulados para la materia.
 }
 \usage{
 datos
 }
 \description{
-Este conjunto de datos incluye información simulada sobre estaciones meteorológicas.
+Conjunto de mediciones simuladas por estacion y fecha para usar en los
+ejemplos del paquete.
+}
+\details{
+Este dataset esta pensado para las funciones
+\code{grafico_temperatura_mensual()} y
+\code{tabla_resumen_temperatura()}, que esperan exactamente estas columnas.
 }
 \keyword{datasets}
