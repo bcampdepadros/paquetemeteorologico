@@ -8,6 +8,7 @@
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- Cuando actives GitHub Actions (R-CMD-check), agregá el badge acá -->
+[![R-CMD-check](https://github.com/bcampdepadros/paquetemeteorologico/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bcampdepadros/paquetemeteorologico/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 El objetivo de **paquetemeteorologico** es ofrecer funciones simples
