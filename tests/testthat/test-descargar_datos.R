@@ -1,31 +1,32 @@
-# Instalar y cargar el paquete testthat si aún no lo has hecho
-# install.packages("testthat")
-library(testthat)
-library(readr)
+# tests/testthat/test-descargar_datos.R
 
-# Definir la función descargar_datos (deberías tener esto en tu script principal)
-descargar_datos <- function(id_estacion, directorio_destino) {
-  url_repositorio <- "https://raw.githubusercontent.com/rse-r/intro-programacion/main/datos/"
-  estacion_url <- paste0(url_repositorio, id_estacion, ".csv")
+testthat::test_that("descargar_datos descarga y lee un CSV válido", {
+  testthat::skip_if_offline()
+  testthat::skip_on_ci()
 
-  # Verificar si el nombre del directorio está ocupado por un archivo
-  if (file.exists(directorio_destino) && !dir.exists(directorio_destino)) {
-    stop(paste("Error: El destino especificado", directorio_destino, "ya existe como archivo. Por favor, elige otro nombre para el directorio."))
-  }
+  id <- "NH0098"
+  tmp <- withr::local_tempdir()
 
-  # Crear la ruta completa para el archivo de destino
-  ruta_archivo <- file.path(directorio_destino, paste0(id_estacion, ".csv"))
+  df <- suppressWarnings(descargar_datos(id_estacion = id, directorio_destino = tmp))
 
-  # Crear el directorio si no existe
-  if (!dir.exists(directorio_destino)) {
-    dir.create(directorio_destino, recursive = TRUE)
-  }
 
-  # Descargar el archivo
-  download.file(url = estacion_url, destfile = ruta_archivo)
+  testthat::expect_s3_class(df, "data.frame")
+  testthat::expect_true(nrow(df) > 0)
 
-  # Leer el archivo CSV
-  datos <- read_csv(ruta_archivo)
+  esperadas <- c("fecha", "temperatura_abrigo_150cm")
+  testthat::expect_true(all(esperadas %in% names(df)))
+})
 
-  return(datos)
-}
+testthat::test_that("descargar_datos crea el archivo en el destino indicado", {
+  testthat::skip_if_offline()
+  testthat::skip_on_ci()
+
+  id <- "NH0098"
+  tmp <- withr::local_tempdir()
+
+  df <- suppressWarnings(descargar_datos(id_estacion = id, directorio_destino = tmp))
+  # <- sin "_"
+
+  ruta <- file.path(tmp, paste0(id, ".csv"))
+  testthat::expect_true(file.exists(ruta))
+})
