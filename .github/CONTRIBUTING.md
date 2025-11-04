@@ -1,6 +1,6 @@
-# Contributing to PRO
+# Contributing to paquetemeteorologico
 
-This outlines how to propose a change to PRO.
+This outlines how to propose a change to paquetemeteorologico.
 For a detailed discussion on contributing to this and other tidyverse packages, please see the [development contributing guide](https://rstd.io/tidy-contrib) and our [code review principles](https://code-review.tidyverse.org/).
 
 ## Fixing typos
@@ -33,7 +33,7 @@ See our guide on [how to create a great issue](https://code-review.tidyverse.org
 ### Code style
 
 *   New code should follow the tidyverse [style guide](https://style.tidyverse.org). 
-    You can use the [styler](https://CRAN.R-project.org/package=styler) package to apply these styles, but please don't restyle code that has nothing to do with your PR.  
+    You can use [Air](https://posit-dev.github.io/air/) to apply this style, but please don't restyle code that has nothing to do with your PR.  
 
 *  We use [roxygen2](https://cran.r-project.org/package=roxygen2), with [Markdown syntax](https://cran.r-project.org/web/packages/roxygen2/vignettes/rd-formatting.html), for documentation.  
 
@@ -42,6 +42,6 @@ See our guide on [how to create a great issue](https://code-review.tidyverse.org
 
 ## Code of Conduct
 
-Please note that the PRO project is released with a
+Please note that the paquetemeteorologico project is released with a
 [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to this
 project you agree to abide by its terms.
