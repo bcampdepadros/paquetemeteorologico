@@ -2,27 +2,25 @@
 % Please edit documentation in R/descargar_datos.R
 \name{descargar_datos}
 \alias{descargar_datos}
-\title{Descargar datos meteorológicos}
+\title{Descargar datos meteorologicos}
 \usage{
 descargar_datos(id_estacion, directorio_destino = tempdir())
 }
 \arguments{
-\item{id_estacion}{ID de la estación meteorológica. Los posibles son: NH0098, NH0046, NH437, NH472 y NH0910.}
+\item{id_estacion}{ID de la estacion. Admitidos: NH0098, NH0046, NH0437, NH0472, NH0910.}
 
-\item{directorio_destino}{Directorio donde se guardará el archivo CSV. Por defecto, se usa un directorio temporal.}
+\item{directorio_destino}{Carpeta destino del CSV (por defecto, tempdir()).}
 }
 \value{
-Un data.frame con los datos meteorológicos de la estación.
-Además, se guarda un archivo CSV en el directorio especificado.
+Un tibble con los datos meteorologicos de la estacion.
 }
 \description{
-La función \code{descargar_datos} toma el ID de una estación y descarga un archivo CSV con los datos meteorológicos.
-Por defecto, se guardará en un directorio temporal seguro, pero se puede especificar otro destino.
+Descarga el CSV de una estacion (por ID) y lo lee como tibble.
+Por defecto guarda en un directorio temporal seguro.
 }
 \examples{
-# Descargar datos de la estación NH0098 en un directorio temporal:
-datos <- descargar_datos("NH0098")
-
-# O especificar un directorio personalizado:
-# datos <- descargar_datos("NH0098", "mi_carpeta")
+\donttest{
+# Requiere internet:
+# datos <- descargar_datos("NH0098")
+}
 }
