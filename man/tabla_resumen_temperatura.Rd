@@ -2,24 +2,29 @@
 % Please edit documentation in R/tabla_resumen_temperatura.R
 \name{tabla_resumen_temperatura}
 \alias{tabla_resumen_temperatura}
-\title{Crea una Tabla Resumen de la Temperatura Abrigo}
+\title{Resumen de temperatura por estacion}
 \usage{
-tabla_resumen_temperatura(datos)
+tabla_resumen_temperatura(
+  df,
+  col_estacion = "estacion",
+  col_temp = "temperatura"
+)
 }
 \arguments{
-\item{datos}{data.frame de las estaciones de cuya temperatura abrigo se quiere crear una tabla resumen.}
+\item{df}{data.frame con columnas de estacion y temperatura.}
+
+\item{col_estacion}{string con el nombre de la columna de estacion.}
+
+\item{col_temp}{string con el nombre de la columna de temperatura (numerica).}
 }
 \value{
-Devuelve una tabla resumen de la temperatura abrigo de las estaciones ingresadas.
+data.frame con columnas: estacion, minimo, maximo, promedio.
 }
 \description{
-La función \code{tabla_resumen_temperatura} crea una tabla de resumen de la temperatura_abrigo_150cm para una o más estaciones.
+Calcula minimo, maximo y promedio por estacion, ignorando NAs y
+devolviendo el resultado ordenado por estacion.
 }
 \examples{
-# Cargar los datos de ejemplo desde el paquete
-# data_path <- system.file("data", "estaciones_merged.rda", package = "PaqueteMeteorologia")
-# load(data_path)
-
-# Llamar a la función usando los datos cargados
-# tabla_resumen_temperatura(estaciones_merged)
+data(datos, package = "paquetemeteorologico")
+tabla_resumen_temperatura(datos, "estacion", "temperatura")
 }

@@ -1,43 +1,68 @@
-#' Resumen de temperatura por estación
+#' Resumen de temperatura por estacion
 #'
-#' Calcula mínimo, máximo y promedio por estación, ignorando NAs y ordenando por estación.
+#' Calcula minimo, maximo y promedio por estacion, ignorando NAs y
+#' devolviendo el resultado ordenado por estacion.
 #'
-#' @param df data.frame con columnas de estación y temperatura.
-#' @param col_estacion nombre de la columna de estación (string).
-#' @param col_temp nombre de la columna de temperatura (numérica).
+#' @param df data.frame con columnas de estacion y temperatura.
+#' @param col_estacion string con el nombre de la columna de estacion.
+#' @param col_temp string con el nombre de la columna de temperatura (numerica).
 #'
 #' @return data.frame con columnas: estacion, minimo, maximo, promedio.
+#' @examples
+#' data(datos, package = "paquetemeteorologico")
+#' tabla_resumen_temperatura(datos, "estacion", "temperatura")
 #' @export
-tabla_resumen_temperatura <- function(df, col_estacion = "estacion", col_temp = "temperatura") {
-  stopifnot(is.data.frame(df))
-  if (!is.character(col_estacion) || !is.character(col_temp))
-    stop("`col_estacion` y `col_temp` deben ser nombres de columnas (strings).")
-  if (!(col_estacion %in% names(df)))
-    stop("Falta la columna: `", col_estacion, "`.")
-  if (!(col_temp %in% names(df)))
-    stop("Falta la columna: `", col_temp, "`.")
+tabla_resumen_temperatura <- function(df,
+                                      col_estacion = "estacion",
+                                      col_temp = "temperatura") {
+  # validaciones
+  if (!is.data.frame(df)) {
+    cli::cli_abort("`df` debe ser un data.frame.")
+  }
+  if (!is.character(col_estacion) || length(col_estacion) != 1L ||
+      !is.character(col_temp)     || length(col_temp)     != 1L) {
+    cli::cli_abort("`col_estacion` y `col_temp` deben ser strings de longitud 1.")
+  }
+  if (!(col_estacion %in% names(df))) {
+    cli::cli_abort("Falta la columna `{col_estacion}` en `df`.")
+  }
+  if (!(col_temp %in% names(df))) {
+    cli::cli_abort("Falta la columna `{col_temp}` en `df`.")
+  }
+  if (!is.numeric(df[[col_temp]])) {
+    cli::cli_abort("`{col_temp}` debe ser numerica.")
+  }
 
-  x <- df[[col_temp]]
-  if (!is.numeric(x)) stop("`", col_temp, "` debe ser numérica.")
+  # filtrar NAs solo en columnas relevantes
+  df2 <- df[!is.na(df[[col_estacion]]) & !is.na(df[[col_temp]]),
+            c(col_estacion, col_temp), drop = FALSE]
 
-  # Filtramos NAs en ambas columnas relevantes
-  df2 <- df[!is.na(df[[col_estacion]]) & !is.na(df[[col_temp]]), c(col_estacion, col_temp), drop = FALSE]
+  # si no queda nada, devolver tibble/df vacio con columnas correctas
+  if (nrow(df2) == 0L) {
+    return(data.frame(
+      estacion = character(),
+      minimo   = numeric(),
+      maximo   = numeric(),
+      promedio = numeric(),
+      check.names = FALSE
+    ))
+  }
+
   est <- df2[[col_estacion]]
+  vals <- df2[[col_temp]]
 
-  # Agregados base R (sin deps)
-  aggr_min  <- tapply(df2[[col_temp]], est, min,  na.rm = TRUE)
-  aggr_max  <- tapply(df2[[col_temp]], est, max,  na.rm = TRUE)
-  aggr_mean <- tapply(df2[[col_temp]], est, mean, na.rm = TRUE)
+  aggr_min  <- tapply(vals, est, min,  na.rm = TRUE)
+  aggr_max  <- tapply(vals, est, max,  na.rm = TRUE)
+  aggr_mean <- tapply(vals, est, mean, na.rm = TRUE)
 
   out <- data.frame(
     estacion = names(aggr_min),
     minimo   = as.numeric(aggr_min),
     maximo   = as.numeric(aggr_max),
     promedio = as.numeric(aggr_mean),
-    row.names = NULL,
+    row.names   = NULL,
     check.names = FALSE
   )
 
-  # Orden consistente para tests
   out[order(out$estacion), ]
 }

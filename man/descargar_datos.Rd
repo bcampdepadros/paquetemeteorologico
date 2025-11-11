@@ -7,20 +7,13 @@
 descargar_datos(id_estacion, directorio_destino = tempdir())
 }
 \arguments{
-\item{id_estacion}{ID de la estacion. Admitidos: NH0098, NH0046, NH0437, NH0472, NH0910.}
+\item{id_estacion}{ID de la estacion (ej.: NH0098, NH0046, NH0437, NH0472, NH0910).}
 
-\item{directorio_destino}{Carpeta destino del CSV (por defecto, tempdir()).}
+\item{directorio_destino}{Carpeta donde guardar el CSV. Por defecto usa un tempdir seguro.}
 }
 \value{
-Un tibble con los datos meteorologicos de la estacion.
+Un data.frame con los datos descargados.
 }
 \description{
-Descarga el CSV de una estacion (por ID) y lo lee como tibble.
-Por defecto guarda en un directorio temporal seguro.
-}
-\examples{
-\donttest{
-# Requiere internet:
-# datos <- descargar_datos("NH0098")
-}
+Descarga el CSV de una estacion y lo lee a un data.frame.
 }

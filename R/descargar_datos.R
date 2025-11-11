@@ -1,50 +1,29 @@
-#' Descargar y leer datos CSV
+#' Descargar datos meteorologicos
 #'
-#' Descarga (si hace falta) y lee un CSV a data.frame. Para testear sin red,
-#' podés pasar un archivo ya existente en `destino`.
+#' Descarga el CSV de una estacion y lo lee a un data.frame.
 #'
-#' @param url URL del CSV remoto. Por defecto un placeholder.
-#' @param destino Ruta opcional donde guardar/leer el archivo. Si existe, se lee sin descargar.
-#' @param quiet Logical, silencia mensajes de descarga/lectura.
+#' @param id_estacion ID de la estacion (ej.: NH0098, NH0046, NH0437, NH0472, NH0910).
+#' @param directorio_destino Carpeta donde guardar el CSV. Por defecto usa un tempdir seguro.
 #'
-#' @return data.frame con los datos leídos.
-#' @examples
-#' \dontrun{
-#' df <- descargar_datos("https://example.com/datos.csv")
-#' }
+#' @return Un data.frame con los datos descargados.
+#' @import readr
+#' @importFrom utils download.file
 #' @export
-descargar_datos <- function(
-    url = "https://example.com/datos.csv",
-    destino = NULL,
-    quiet = TRUE
-) {
-  if (!is.character(url) || length(url) != 1L) {
-    stop("`url` debe ser un string de longitud 1")
+descargar_datos <- function(id_estacion, directorio_destino = tempdir()) {
+  if (!is.character(id_estacion) || length(id_estacion) != 1L) {
+    stop("`id_estacion` debe ser un string de longitud 1")
   }
 
-  # Ruta destino por defecto (tempdir) si no se especifica
-  if (is.null(destino)) {
-    destino <- file.path(tempdir(), basename(url))
+  url_base <- "https://raw.githubusercontent.com/rse-r/intro-programacion/main/datos/"
+  url <- paste0(url_base, id_estacion, ".csv")
+
+  if (!dir.exists(directorio_destino)) {
+    dir.create(directorio_destino, recursive = TRUE)
   }
 
-  # Si el archivo ya existe, leemos sin descargar (facilita test unitario)
-  if (file.exists(destino)) {
-    if (!quiet) message("Leyendo archivo existente: ", destino)
-    return(utils::read.csv(destino, stringsAsFactors = FALSE))
-  }
+  ruta <- file.path(directorio_destino, paste0(id_estacion, ".csv"))
 
-  # Descarga con manejo de errores
-  ok <- tryCatch({
-    utils::download.file(url, destino, quiet = quiet, mode = "wb")
-    TRUE
-  }, error = function(e) {
-    if (!quiet) message("Fallo la descarga: ", conditionMessage(e))
-    FALSE
-  })
+  utils::download.file(url = url, destfile = ruta, mode = "wb", quiet = TRUE)
 
-  if (!ok || !file.exists(destino)) {
-    stop("No fue posible descargar el archivo desde: ", url)
-  }
-
-  utils::read.csv(destino, stringsAsFactors = FALSE)
+  readr::read_csv(ruta, show_col_types = FALSE)
 }

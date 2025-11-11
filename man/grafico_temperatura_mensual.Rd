@@ -2,31 +2,18 @@
 % Please edit documentation in R/grafico_temperatura_mensual.R
 \name{grafico_temperatura_mensual}
 \alias{grafico_temperatura_mensual}
-\title{Grafico de la temperatura mensual}
+\title{Grafico de temperatura mensual}
 \usage{
-grafico_temperatura_mensual(datos, titulo = "Temperatura")
+grafico_temperatura_mensual(df, titulo = "Temperatura mensual")
 }
 \arguments{
-\item{datos}{Data frame con columnas: \code{id}, \code{fecha}, \code{temperatura_abrigo_150cm}.}
+\item{df}{data.frame con columna \code{fecha} (Date) y columna de temperatura.}
 
-\item{titulo}{Titulo del grafico (string).}
+\item{titulo}{Titulo del grafico.}
 }
 \value{
-Objeto ggplot.
+Un objeto ggplot.
 }
 \description{
-Devuelve un ggplot con la temperatura promedio mensual por estacion.
-}
-\examples{
-\donttest{
-data(datos, package = "paquetemeteorologico")
-if (all(c("estacion","temperatura") \%in\% names(datos))) {
-  df <- data.frame(
-    id    = datos$estacion,
-    fecha = as.Date("2020-01-01") + seq_len(nrow(datos)) - 1,
-    temperatura_abrigo_150cm = datos$temperatura
-  )
-  p <- grafico_temperatura_mensual(df, titulo = "Temperatura mensual promedio")
-}
-}
+Agrupa por mes (AAAA-MM) y grafica la temperatura promedio mensual.
 }
