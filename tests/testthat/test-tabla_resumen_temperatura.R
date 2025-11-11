@@ -1,43 +1,33 @@
-# Instalar y cargar el paquete testthat si aún no lo has hecho
-# install.packages("testthat")
-library(testthat)
-library(dplyr)
-
-# Definir la función tabla_resumen_temperatura (deberías tener esto en tu script principal)
-tabla_resumen_temperatura <- function(datos) {
-  resumen <- datos %>%
-    group_by(id) %>%
-    summarise(
-      min_temp = min(temperatura_abrigo_150cm, na.rm = TRUE),
-      max_temp = max(temperatura_abrigo_150cm, na.rm = TRUE),
-      mean_temp = mean(temperatura_abrigo_150cm, na.rm = TRUE)
-    )
-  return(resumen)
-}
-
-# Crear un conjunto de datos de ejemplo
-datos_ejemplo <- data.frame(
-  id = c(1, 1, 2, 2, 3, 3),
-  temperatura_abrigo_150cm = c(15, 20, 10, 12, NA, 18)
-)
-
-# Iniciar las pruebas
-test_that("tabla_resumen_temperatura funciona correctamente", {
-
-  # Llamar a la función con los datos de ejemplo
-  resultado <- tabla_resumen_temperatura(datos_ejemplo)
-
-  # Comprobar la estructura del resultado
-  expect_s3_class(resultado, "data.frame")
-
-  # Comprobar que el número de filas es correcto (debe ser igual al número de estaciones)
-  expect_equal(nrow(resultado), 3)
-
-  # Comprobar que los valores de min, max y mean son correctos
-  expect_equal(resultado$min_temp, c(15, 10, 18))  # Valores mínimos por id
-  expect_equal(resultado$max_temp, c(20, 12, 18))  # Valores máximos por id
-  expect_equal(resultado$mean_temp, c(17.5, 11, 18))  # Valores medios por id
+testthat::test_that("tabla_resumen_temperatura calcula min/max/mean y ordena", {
+  df <- data.frame(
+    estacion    = c("B","A","A", NA),
+    temperatura = c(30, 10, 20, 15)
+  )
+  out <- tabla_resumen_temperatura(df)
+  testthat::expect_true(all(c("estacion","minimo","maximo","promedio") %in% names(out)))
+  # quedan solo A y B (la fila con NA en estacion se ignora)
+  testthat::expect_equal(sort(out$estacion), c("A","B"))
+  testthat::expect_equal(out$minimo[out$estacion=="A"], 10)
+  testthat::expect_equal(out$maximo[out$estacion=="A"], 20)
+  testthat::expect_equal(out$promedio[out$estacion=="A"], 15)
 })
 
-# Para ejecutar las pruebas, simplemente puedes usar:
-# test_file("ruta/a/tu/archivo_de_pruebas.R") o usar test_dir si tienes múltiples archivos de prueba
+testthat::test_that("tabla_resumen_temperatura valida columnas y tipos", {
+  df_ok <- data.frame(estacion = c("X","X","Y"), temperatura = c(1, NA, 3))
+
+  # falta columna
+  testthat::expect_error(
+    tabla_resumen_temperatura(df_ok[, "temperatura", drop = FALSE]),
+    "Falta la columna"
+  )
+
+  # temperatura no numérica
+  df_bad <- df_ok; df_bad$temperatura <- as.character(df_bad$temperatura)
+  testthat::expect_error(tabla_resumen_temperatura(df_bad), "debe ser numérica")
+
+  # nombres de columnas personalizados
+  df_alt <- data.frame(id = c("X","X","Y"), temp = c(1, NA, 3))
+  out2 <- tabla_resumen_temperatura(df_alt, col_estacion = "id", col_temp = "temp")
+  testthat::expect_equal(sort(out2$estacion), c("X","Y"))
+  testthat::expect_equal(out2$minimo[out2$estacion=="X"], 1)
+})

@@ -1,32 +1,30 @@
-# tests/testthat/test-descargar_datos.R
+testthat::test_that("descargar_datos descarga desde file:// y lee OK", {
+  # Armamos un CSV local y lo servimos vía URL file:// para ejercitar la rama de descarga
+  src <- tempfile(fileext = ".csv")
+  write.csv(data.frame(a = 1:3, b = c("x","y","z")), src, row.names = FALSE)
+  url_file <- paste0("file://", src)
 
-testthat::test_that("descargar_datos descarga y lee un CSV válido", {
-  testthat::skip_if_offline()
-  testthat::skip_on_ci()
+  dest <- tempfile(fileext = ".csv")
+  on.exit(unlink(c(src, dest), force = TRUE), add = TRUE)
 
-  id <- "NH0098"
-  tmp <- withr::local_tempdir()
+  df1 <- descargar_datos(url = url_file, destino = dest, quiet = TRUE)
+  testthat::expect_s3_class(df1, "data.frame")
+  testthat::expect_true(file.exists(dest))
+  testthat::expect_equal(nrow(df1), 3)
 
-  df <- suppressWarnings(descargar_datos(id_estacion = id, directorio_destino = tmp))
-
-
-  testthat::expect_s3_class(df, "data.frame")
-  testthat::expect_true(nrow(df) > 0)
-
-  esperadas <- c("fecha", "temperatura_abrigo_150cm")
-  testthat::expect_true(all(esperadas %in% names(df)))
+  # Segunda llamada: usa la rama de "archivo ya existe" (lectura directa)
+  df2 <- descargar_datos(url = url_file, destino = dest, quiet = TRUE)
+  testthat::expect_equal(df2, df1)
 })
 
-testthat::test_that("descargar_datos crea el archivo en el destino indicado", {
-  testthat::skip_if_offline()
-  testthat::skip_on_ci()
+testthat::test_that("descargar_datos valida argumentos y falla con URL inexistente", {
+  # url no-length-1
+  testthat::expect_error(descargar_datos(url = c("a","b")), "`url` debe ser un string")
 
-  id <- "NH0098"
-  tmp <- withr::local_tempdir()
-
-  df <- suppressWarnings(descargar_datos(id_estacion = id, directorio_destino = tmp))
-  # <- sin "_"
-
-  ruta <- file.path(tmp, paste0(id, ".csv"))
-  testthat::expect_true(file.exists(ruta))
+  # URL file:// inexistente -> debe fallar
+  bad <- paste0("file://", tempfile(fileext = ".csv"))
+  testthat::expect_error(
+    descargar_datos(url = bad, destino = tempfile(fileext = ".csv"), quiet = TRUE),
+    "No fue posible descargar el archivo"
+  )
 })
