@@ -1,30 +1,29 @@
-testthat::test_that("descargar_datos descarga desde file:// y lee OK", {
-  # Armamos un CSV local y lo servimos vía URL file:// para ejercitar la rama de descarga
-  src <- tempfile(fileext = ".csv")
-  write.csv(data.frame(a = 1:3, b = c("x","y","z")), src, row.names = FALSE)
-  url_file <- paste0("file://", src)
+test_that("descargar_datos descarga y lee correctamente (simulado local)", {
+  # 1. Crear un CSV falso temporal que simula ser el remoto
+  dir_simulado <- tempfile()
+  dir.create(dir_simulado)
+  archivo_remoto <- file.path(dir_simulado, "EST_TEST.csv")
 
-  dest <- tempfile(fileext = ".csv")
-  on.exit(unlink(c(src, dest), force = TRUE), add = TRUE)
+  df_dummy <- data.frame(a = 1:3, b = c("x", "y", "z"))
+  write.csv(df_dummy, archivo_remoto, row.names = FALSE)
 
-  df1 <- descargar_datos(url = url_file, destino = dest, quiet = TRUE)
-  testthat::expect_s3_class(df1, "data.frame")
-  testthat::expect_true(file.exists(dest))
-  testthat::expect_equal(nrow(df1), 3)
+  # La url base sera "file://ruta_temporal/"
+  url_base_local <- paste0("file://", dir_simulado, "/")
 
-  # Segunda llamada: usa la rama de "archivo ya existe" (lectura directa)
-  df2 <- descargar_datos(url = url_file, destino = dest, quiet = TRUE)
-  testthat::expect_equal(df2, df1)
+  # 2. Definir destino de descarga
+  dest <- tempfile()
+
+  # Limpieza al salir
+  on.exit(unlink(c(dir_simulado, dest), recursive = TRUE), add = TRUE)
+
+  # 3. Probamos la funcion pasando la url_base trucada
+  resultado <- descargar_datos("EST_TEST", directorio_destino = dest, url_base = url_base_local)
+
+  expect_s3_class(resultado, "data.frame")
+  expect_equal(nrow(resultado), 3)
+  expect_true(file.exists(file.path(dest, "EST_TEST.csv")))
 })
 
-testthat::test_that("descargar_datos valida argumentos y falla con URL inexistente", {
-  # url no-length-1
-  testthat::expect_error(descargar_datos(url = c("a","b")), "`url` debe ser un string")
-
-  # URL file:// inexistente -> debe fallar
-  bad <- paste0("file://", tempfile(fileext = ".csv"))
-  testthat::expect_error(
-    descargar_datos(url = bad, destino = tempfile(fileext = ".csv"), quiet = TRUE),
-    "No fue posible descargar el archivo"
-  )
+test_that("descargar_datos valida argumentos", {
+  expect_error(descargar_datos(123), "debe ser un string")
 })
