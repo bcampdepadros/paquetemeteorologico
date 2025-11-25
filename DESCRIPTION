@@ -1,6 +1,5 @@
 Package: paquetemeteorologico
-Type: Package
-Title: Herramientas para el análisis y visualización de datos meteorológicos
+Title: Herramientas para el Analisis y Visualizacion de Datos Meteorologicos
 Version: 0.1.0
 Authors@R: 
     c(
@@ -14,13 +13,16 @@ Description: Este paquete proporciona funciones sencillas para importar, limpiar
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3
-Depends: R (>= 3.6)
-Imports:
+RoxygenNote: 7.3.2
+Depends: 
+    R (>= 3.6)
+Imports: 
     cli,
     ggplot2,
-    readr
-Suggests:
+    readr,
+    utils,
+    stats
+Suggests: 
     testthat (>= 3.0.0),
     covr,
     knitr,
@@ -28,7 +30,7 @@ Suggests:
     withr,
     dplyr
 Config/testthat/edition: 3
-URL: https://github.com/bcampdepadros/paquetemeteorologico, https://bcampdepadros.github.io/paquetemeteorologico/
+URL: https://github.com/bcampdepadros/paquetemeteorologico
 BugReports: https://github.com/bcampdepadros/paquetemeteorologico/issues
 VignetteBuilder: knitr
 LazyData: true
