@@ -4,12 +4,18 @@
 \alias{descargar_datos}
 \title{Descargar datos meteorologicos}
 \usage{
-descargar_datos(id_estacion, directorio_destino = tempdir())
+descargar_datos(
+  id_estacion,
+  directorio_destino = tempdir(),
+  url_base = "https://raw.githubusercontent.com/rse-r/intro-programacion/main/datos/"
+)
 }
 \arguments{
-\item{id_estacion}{ID de la estacion (ej.: NH0098, NH0046, NH0437, NH0472, NH0910).}
+\item{id_estacion}{ID de la estacion (ej.: NH0098, NH0046).}
 
 \item{directorio_destino}{Carpeta donde guardar el CSV. Por defecto usa un tempdir seguro.}
+
+\item{url_base}{URL base para descargar (argumento interno para tests).}
 }
 \value{
 Un data.frame con los datos descargados.
