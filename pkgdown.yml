@@ -3,7 +3,7 @@ pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   introduccion: introduccion.html
-last_built: 2025-11-25T20:14Z
+last_built: 2025-11-25T20:18Z
 urls:
   reference: https://bcampdepadros.github.io/paquetemeteorologico/reference
   article: https://bcampdepadros.github.io/paquetemeteorologico/articles
