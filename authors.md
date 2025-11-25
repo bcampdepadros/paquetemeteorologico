@@ -12,11 +12,11 @@ Source:
 [`DESCRIPTION`](https://github.com/bcampdepadros/paquetemeteorologico/blob/master/DESCRIPTION)
 
 Campdepadros B, Menendez M (2025). *paquetemeteorologico: Herramientas
-para el análisis y visualización de datos meteorológicos*. R package
+para el Analisis y Visualizacion de Datos Meteorologicos*. R package
 version 0.1.0, <https://github.com/bcampdepadros/paquetemeteorologico>.
 
     @Manual{,
-      title = {paquetemeteorologico: Herramientas para el análisis y visualización de datos meteorológicos},
+      title = {paquetemeteorologico: Herramientas para el Analisis y Visualizacion de Datos Meteorologicos},
       author = {Bautista Campdepadros and Manuel Menendez},
       year = {2025},
       note = {R package version 0.1.0},
