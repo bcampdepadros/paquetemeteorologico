@@ -54,20 +54,69 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="paquetemeteorologico">paquetemeteorologico<a class="anchor" aria-label="anchor" href="#paquetemeteorologico"></a>
 </h1></div>
-<!-- badges: start -->
-
-<p>El objetivo de <strong>paquetemeteorologico</strong> es ofrecer funciones simples para trabajar con datos meteorológicos:</p>
-<ul>
-<li>Conversión de unidades (Celsius → Fahrenheit).</li>
-<li>Resumen por estación (mínimo, máximo y promedio).</li>
-<li>Gráfico mensual de temperatura.</li>
-</ul>
-<p>El paquete está pensado como práctica de la materia, siguiendo la guía del curso.</p>
+<p><a href="https://github.com/bcampdepadros/paquetemeteorologico/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/bcampdepadros/paquetemeteorologico/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a> <img src="https://img.shields.io/badge/coverage-96%25-brightgreen" alt="Coverage"><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></p>
+<div class="section level2">
+<h2 id="descripción">Descripción<a class="anchor" aria-label="anchor" href="#descripci%C3%B3n"></a>
+</h2>
+<p>El objetivo de <code>paquetemeteorologico</code> es proporcionar un set de herramientas robustas para el análisis y visualización de datos climáticos provenientes de estaciones meteorológicas. Este paquete fue desarrollado como parte de la materia <strong>Programación 2</strong> de la Licenciatura en Ciencia de Datos (Universidad Austral).</p>
+<p>Incluye funcionalidades para: * <strong>Descarga automática</strong> de datos desde repositorios remotos. * <strong>Conversión de unidades</strong> (Celsius ↔︎ Fahrenheit). * <strong>Resúmenes estadísticos</strong> (mínimos, máximos, promedios por estación). * <strong>Visualización</strong> de series temporales mensuales.</p>
+</div>
 <div class="section level2">
 <h2 id="instalación">Instalación<a class="anchor" aria-label="anchor" href="#instalaci%C3%B3n"></a>
 </h2>
-<p>Desde GitHub:</p>
-<p>```r # install.packages(“pak”) pak::pak(“bcampdepadros/paquetemeteorologico”)</p>
+<p>Se puede instalar la versión de desarrollo de <code>paquetemeteorologico</code> desde <a href="https://github.com/" class="external-link">GitHub</a> con:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"bcampdepadros/paquetemeteorologico"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="ejemplos-de-uso">Ejemplos de Uso<a class="anchor" aria-label="anchor" href="#ejemplos-de-uso"></a>
+</h2>
+<p>A continuación se muestran ejemplos básicos de las funciones principales del paquete:</p>
+<div class="section level3">
+<h3 id="id_1-cargar-la-librería">1. Cargar la librería<a class="anchor" aria-label="anchor" href="#id_1-cargar-la-librer%C3%ADa"></a>
+</h3>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bcampdepadros/paquetemeteorologico" class="external-link">paquetemeteorologico</a></span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="id_2-conversión-de-temperaturas">2. Conversión de Temperaturas<a class="anchor" aria-label="anchor" href="#id_2-conversi%C3%B3n-de-temperaturas"></a>
+</h3>
+<p>Convertir grados Celsius a Fahrenheit es directo:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/celsius_to_fahrenheit.html">celsius_to_fahrenheit</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>   <span class="co"># Punto de congelación</span></span>
+<span><span class="co">#&gt; [1] 32</span></span>
+<span><span class="fu"><a href="reference/celsius_to_fahrenheit.html">celsius_to_fahrenheit</a></span><span class="op">(</span><span class="fl">25</span><span class="op">)</span>  <span class="co"># Temperatura ambiente</span></span>
+<span><span class="co">#&gt; [1] 77</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="id_3-resumen-de-datos">3. Resumen de Datos<a class="anchor" aria-label="anchor" href="#id_3-resumen-de-datos"></a>
+</h3>
+<p>Podemos generar una tabla resumen con estadísticas clave por estación. Usaremos el dataset de ejemplo:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"datos"</span><span class="op">)</span></span>
+<span><span class="co"># Usamos los nombres de columnas que tiene tu dataset</span></span>
+<span><span class="fu"><a href="reference/tabla_resumen_temperatura.html">tabla_resumen_temperatura</a></span><span class="op">(</span><span class="va">datos</span>, </span>
+<span>                          col_estacion <span class="op">=</span> <span class="st">"estacion"</span>, </span>
+<span>                          col_temp <span class="op">=</span> <span class="st">"temperatura"</span><span class="op">)</span></span>
+<span><span class="co">#&gt;     estacion minimo maximo promedio</span></span>
+<span><span class="co">#&gt; 1 Estacion A   22.5   22.5     22.5</span></span>
+<span><span class="co">#&gt; 2 Estacion B   18.7   18.7     18.7</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="id_4-visualización">4. Visualización<a class="anchor" aria-label="anchor" href="#id_4-visualizaci%C3%B3n"></a>
+</h3>
+<p>Generar un gráfico de la evolución mensual de la temperatura es muy sencillo:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Creamos datos de prueba para demostrar el gráfico</span></span>
+<span><span class="va">datos_grafico</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  fecha <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2023-01-01"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2023-12-01"</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"month"</span><span class="op">)</span>,</span>
+<span>  temperatura <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">24</span>, <span class="fl">22</span>, <span class="fl">18</span>, <span class="fl">15</span>, <span class="fl">12</span>, <span class="fl">11</span>, <span class="fl">13</span>, <span class="fl">16</span>, <span class="fl">19</span>, <span class="fl">22</span>, <span class="fl">26</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/grafico_temperatura_mensual.html">grafico_temperatura_mensual</a></span><span class="op">(</span><span class="va">datos_grafico</span>, titulo <span class="op">=</span> <span class="st">"Ejemplo: Temperatura Anual"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-grafico-1.png" width="100%"></p>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -109,13 +158,7 @@
 </ul>
 </div>
 
-<div class="dev-status">
-<h2 data-toc-skip>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
-<li><a href="https://github.com/bcampdepadros/paquetemeteorologico/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/bcampdepadros/paquetemeteorologico/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-</ul>
-</div>
+
 
   </aside>
 </div>

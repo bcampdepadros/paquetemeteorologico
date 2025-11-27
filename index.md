@@ -1,18 +1,83 @@
 # paquetemeteorologico
 
-El objetivo de **paquetemeteorologico** es ofrecer funciones simples
-para trabajar con datos meteorológicos:
+[![R-CMD-check](https://github.com/bcampdepadros/paquetemeteorologico/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bcampdepadros/paquetemeteorologico/actions/workflows/R-CMD-check.yaml)
+![Coverage](https://img.shields.io/badge/coverage-96%25-brightgreen)[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 
-- Conversión de unidades (Celsius → Fahrenheit).
-- Resumen por estación (mínimo, máximo y promedio).
-- Gráfico mensual de temperatura.
+## Descripción
 
-El paquete está pensado como práctica de la materia, siguiendo la guía
-del curso.
+El objetivo de `paquetemeteorologico` es proporcionar un set de
+herramientas robustas para el análisis y visualización de datos
+climáticos provenientes de estaciones meteorológicas. Este paquete fue
+desarrollado como parte de la materia **Programación 2** de la
+Licenciatura en Ciencia de Datos (Universidad Austral).
+
+Incluye funcionalidades para: \* **Descarga automática** de datos desde
+repositorios remotos. \* **Conversión de unidades** (Celsius ↔︎
+Fahrenheit). \* **Resúmenes estadísticos** (mínimos, máximos, promedios
+por estación). \* **Visualización** de series temporales mensuales.
 
 ## Instalación
 
-Desde GitHub:
+Se puede instalar la versión de desarrollo de `paquetemeteorologico`
+desde [GitHub](https://github.com/) con:
 
-\`\`\`r \# install.packages(“pak”)
-pak::pak(“bcampdepadros/paquetemeteorologico”)
+``` r
+# install.packages("pak")
+pak::pak("bcampdepadros/paquetemeteorologico")
+```
+
+## Ejemplos de Uso
+
+A continuación se muestran ejemplos básicos de las funciones principales
+del paquete:
+
+### 1. Cargar la librería
+
+``` r
+library(paquetemeteorologico)
+```
+
+### 2. Conversión de Temperaturas
+
+Convertir grados Celsius a Fahrenheit es directo:
+
+``` r
+celsius_to_fahrenheit(0)   # Punto de congelación
+#> [1] 32
+celsius_to_fahrenheit(25)  # Temperatura ambiente
+#> [1] 77
+```
+
+### 3. Resumen de Datos
+
+Podemos generar una tabla resumen con estadísticas clave por estación.
+Usaremos el dataset de ejemplo:
+
+``` r
+data("datos")
+# Usamos los nombres de columnas que tiene tu dataset
+tabla_resumen_temperatura(datos, 
+                          col_estacion = "estacion", 
+                          col_temp = "temperatura")
+#>     estacion minimo maximo promedio
+#> 1 Estacion A   22.5   22.5     22.5
+#> 2 Estacion B   18.7   18.7     18.7
+```
+
+### 4. Visualización
+
+Generar un gráfico de la evolución mensual de la temperatura es muy
+sencillo:
+
+``` r
+# Creamos datos de prueba para demostrar el gráfico
+datos_grafico <- data.frame(
+  fecha = seq(as.Date("2023-01-01"), as.Date("2023-12-01"), by = "month"),
+  temperatura = c(25, 24, 22, 18, 15, 12, 11, 13, 16, 19, 22, 26)
+)
+
+grafico_temperatura_mensual(datos_grafico, titulo = "Ejemplo: Temperatura Anual")
+```
+
+![](reference/figures/README-grafico-1.png)
