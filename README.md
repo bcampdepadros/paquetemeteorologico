@@ -8,6 +8,9 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 ## Descripción
 
+\*\* Podés ver la documentación completa y la página web del paquete
+acá:\*\* <https://bcampdepadros.github.io/paquetemeteorologico/>
+
 El objetivo de `paquetemeteorologico` es proporcionar un set de
 herramientas robustas para el análisis y visualización de datos
 climáticos provenientes de estaciones meteorológicas. Este paquete fue

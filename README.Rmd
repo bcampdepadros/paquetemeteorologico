@@ -19,6 +19,8 @@ knitr::opts_chunk$set(
 
 ## Descripción
 
+** Podés ver la documentación completa y la página web del paquete acá:** [https://bcampdepadros.github.io/paquetemeteorologico/](https://bcampdepadros.github.io/paquetemeteorologico/)
+
 El objetivo de `paquetemeteorologico` es proporcionar un set de herramientas robustas para el análisis y visualización de datos climáticos provenientes de estaciones meteorológicas. Este paquete fue desarrollado como parte de la materia **Programación 2** de la Licenciatura en Ciencia de Datos (Universidad Austral).
 
 Incluye funcionalidades para:
